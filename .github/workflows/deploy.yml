@@ -28,6 +28,8 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          git config --global credential.helper store
+          echo "https://${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
 
       - name: Generate and Deploy
         env:
@@ -35,6 +37,5 @@ jobs:
         run: |
           npx hexo clean
           npx hexo g
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
           npx hexo d
 
