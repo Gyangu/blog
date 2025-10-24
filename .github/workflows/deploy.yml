@@ -37,5 +37,7 @@ jobs:
         run: |
           npx hexo clean
           npx hexo g
+          # Replace repo URL with token
+          sed -i 's|https://github.com/|https://${{ secrets.GITHUB_TOKEN }}@github.com/|g' _config.yml
           npx hexo d
 
