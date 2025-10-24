@@ -34,13 +34,12 @@ yarn server
    git commit -m "Update notes"
    git push origin main
    ```
-3. 更新博客仓库的子模块引用：
-   ```bash
-   git add source
-   git commit -m "Update obsidian notes"
-   git push origin master
-   ```
-4. GitHub Actions 会自动部署博客
+3. ✅ **自动完成**：GitHub Actions 会自动：
+   - 更新博客仓库的子模块引用
+   - 触发博客部署
+   - 更新网站内容
+
+**无需手动操作 blog 仓库！**
 
 ### 创建内容
 ```bash
