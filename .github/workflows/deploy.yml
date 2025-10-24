@@ -1,0 +1,34 @@
+name: Deploy Hexo Blog
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Blog Repo
+        uses: actions/checkout@v4
+        with:
+          submodules: true  # 自动拉取子模块
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Generate and Deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npx hexo clean
+          npx hexo g
+          npx hexo d
+
