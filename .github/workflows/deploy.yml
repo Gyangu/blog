@@ -28,16 +28,21 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git config --global credential.helper store
-          echo "https://${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
 
-      - name: Generate and Deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Site
         run: |
           npx hexo clean
           npx hexo g
-          # Replace repo URL with token
-          sed -i 's|https://github.com/|https://${{ secrets.GITHUB_TOKEN }}@github.com/|g' _config.yml
-          npx hexo d
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git clone --depth=1 --branch=gh-pages https://github.com/Gyangu/blog.git public_deploy
+          cd public_deploy
+          git rm -rf .
+          cp -r ../public/* .
+          git add .
+          git commit -m "Site updated: $(date)"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/Gyangu/blog.git HEAD:gh-pages
 
