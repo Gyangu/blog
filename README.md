@@ -22,6 +22,26 @@ yarn server
 
 ## 📝 内容管理
 
+### Obsidian 笔记集成
+本博客使用 `obsidian-notes` 仓库作为 `source` 目录的内容源。
+
+**工作流程：**
+1. 在 Obsidian 中编辑笔记（`source` 目录）
+2. 提交到 `obsidian-notes` 仓库：
+   ```bash
+   cd source
+   git add .
+   git commit -m "Update notes"
+   git push origin main
+   ```
+3. 更新博客仓库的子模块引用：
+   ```bash
+   git add source
+   git commit -m "Update obsidian notes"
+   git push origin master
+   ```
+4. GitHub Actions 会自动部署博客
+
 ### 创建内容
 ```bash
 # 创建新文章
